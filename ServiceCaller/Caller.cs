@@ -11,6 +11,12 @@ namespace WebClient.ServiceCaller
 {
     public class Caller
     {
+        /// <summary>
+        /// Calling Web Service (with Scripting enabled)
+        /// </summary>
+        /// <param name="ServiceUri">Valid key in web.config, where the value should be valid Uri for the web service call</param>
+        /// <param name="Object">Object, this object will be serialized by Newtonsoft JsonConvert.</param>
+        /// <returns></returns>
         public static string CallPOSTWebService(string ServiceUri, object Object)
         {
             string result = string.Empty;
