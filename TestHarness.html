@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>HTML TestHarness Page (Calling WS from JavaScripts)</title>
+    <meta charset="utf-8" />
+    <script src="Scripts/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" >
+        $(document).ready(function () {
+            //JS Code here
+            $("#btnSubmit").click(function () {
+                var internalServiceUri = "/Services/Common.asmx/Call";
+                var fullName = $("#txtFullName").val();
+                var age = parseInt($("#txtAge").val());                
+                var innerParameters = '{\\"FullName\\":\\"' + fullName + '\\", \\"Age\\":' + age + '}';
+                var outerParameters = '{"CatalogName":"InsertPeopleService", "JsonString":"' + innerParameters + '"}';
+                
+                console.log(outerParameters);
+
+                $.ajax({
+                    type: "POST",
+                    url: internalServiceUri,
+                    data: outerParameters,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (msg) {
+                        console.log(msg);
+                        $("#txtResult").html(msg.d);
+                    },
+                    error: function (e) {
+                        $("#txtResult").html("Unavailable");
+                    }
+                });
+
+            });
+        });
+    </script>
+</head>
+<body>
+    <form id="frmMain">
+        <table width="400px" border="0">
+            <tr>
+                <td width="150px">
+                    Full Name
+                </td>
+                <td>
+                    <input type="text" id="txtFullName" width="100%" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Age
+                </td>
+                <td>
+                    <input type="text" id="txtAge" width="100%" />
+                </td>
+            </tr>
+        </table>
+        <button type="button" id="btnSubmit">Submit</button>
+        <br /><br />
+        <textarea id="txtResult" width="400px" rows="10" ></textarea>
+    </form>
+</body>
+</html>
